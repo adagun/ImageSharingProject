@@ -6,6 +6,7 @@ from .forms import PostForm
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 # Create your views here.
 
 
@@ -14,5 +15,6 @@ class PostsView(LoginRequiredMixin, ListView):
     context_object_name = "posts"
     template_name = "posts/posts.html"
 
-
+def indexView(request):
+    return render(request, "index.html")
 
