@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ user.username }} page:</h1>
+
+<div>
+    <h4>uploaded images</h4>
+    {% for postImage in postImages %}
+        {% if postImage.image %} <img style="width: 140px; height: 80px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> {% endif %}
+    {% endfor %} 
+</div>
+
+
+<a href="{% url 'index' %}">Home</a>
+{% endblock content %}

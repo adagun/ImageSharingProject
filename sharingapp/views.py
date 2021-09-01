@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-
-from .models import Post
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import Post, UserSavedImage
 from .forms import PostForm
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -43,3 +44,25 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     context_object_name = 'post'
     success_url = reverse_lazy('posts')
     template_name = "posts/delete_post.html"
+
+
+@login_required
+def profileView(request):
+    savedImages = UserSavedImage.objects.filter(user=request.user)
+    postImages = Post.objects.filter(user=request.user)
+
+    context = {
+        "savedImages":savedImages,
+        "postImages":postImages,
+    }
+    return render(request, "profile.html", context)
+
+def userPage(request, Id):
+    postImages = Post.objects.filter(user=Id)
+    user = User.objects.get(id=Id)
+
+    context = {
+        "user":user,
+        "postImages":postImages,
+    }
+    return render(request, "userPage.html", context)

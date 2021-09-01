@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>profile page</h1>
+<h3>{{ user.username }}</h3>
+
+
+<div>
+    <h4>Saved Images</h4>
+    {% for savedImage in savedImages %}
+        {% if savedImage.post.image %} <img style="width: 140px; height: 80px" src="{{savedImage.post.image.url}}" alt="img" class="img-thumbnail"> {% endif %}
+    {% endfor %} 
+</div>
+
+
+<div>
+    <h4>uploaded images</h4>
+    {% for postImage in postImages %}
+        {% if postImage.image %} <img style="width: 140px; height: 80px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> {% endif %}
+    {% endfor %} 
+</div>
+
+
+<a href="{% url 'index' %}">Home</a>
+{% endblock content %}
