@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{{  user.is_authenticated }}
+
+<h1>index</h1>
+<div>
+    
+<a href="{% url 'accounts:register' %}">register</a>
+</div>
+<div>
+<a href="{% url 'accounts:login' %}">login</a>
+</div>
+<div>
+<a href="{% url 'accounts:logout' %}">logout</a>
+</div>
+
+{% endblock content %}

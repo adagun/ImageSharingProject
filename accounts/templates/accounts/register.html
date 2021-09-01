@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{  user.is_authenticated }}
+<h1>Register</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <div>
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        <input type="text" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" required  placeholder="email"/>
+    </div>
+        <label for="{{ form.first_name.id_for_label }}">First name</label>
+        <input type="text" class="form-control form-control-lg" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" required  placeholder="first name"/>
+    <div>
+        <label for="{{ form.last_name.id_for_label }}">Last name</label>
+        <input type="text" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" required placeholder="last name"/>
+    </div>
+    <div>
+        <label for="{{ form.username.id_for_label }}">Username</label>
+        <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" required  placeholder="username"  />
+    </div>
+    <div>
+        <label for="{{ form.password1.id_for_label }}">Password</label>
+        <input type="password" id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" autocomplete="new-password" required placeholder="************"  />
+    </div>
+    <div>
+        <label for="{{ form.password2.id_for_label }}" >Re_Password</label>
+        <input type="password" id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" required placeholder="************"  />
+    </div>
+                
+    <div>
+        <button type="submit">Sign in</button>
+    </div>
+</form>
+
+{% endblock content %}
