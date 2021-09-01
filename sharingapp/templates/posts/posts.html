@@ -3,10 +3,6 @@
         <div class="container">
             <h1>Posts</h1>
 
-            <!-- <form action="{% url 'searchbar' %}" method="GET">
-                <input type="text" name="search">
-                <button type="submit">Search</button>
-            </form> -->
             <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
                 Search <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts"/>
                 <input type="submit" name="submit" value="Search"/>
@@ -31,8 +27,11 @@
                  <td> {% if post.image %} <img style="width: 140px; height: 80px" src="{{post.image.url}}" alt="default.jpg" class="img-thumbnail"> {% endif %}</td>
                 <td>
                 <a href="{% url 'post' post.id%}"><button type="button" class="btn btn-success">View post</button></a>
+                
+                <a href="{% url 'save_post' post.id%}"><button type="button" class="btn btn-success">save post</button></a>
                 </td>
-
+                
         {% endfor %}
         </table>
             </div>
+

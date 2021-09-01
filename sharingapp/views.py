@@ -1,4 +1,6 @@
-from django.shortcuts import render
+
+from django.http import request
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -58,6 +60,7 @@ def profileView(request):
     }
     return render(request, "profile.html", context)
 
+
 def userPage(request, Id):
     postImages = Post.objects.filter(user=Id)
     user = User.objects.get(id=Id)
@@ -72,6 +75,7 @@ class PostView(LoginRequiredMixin, DetailView):
     context_object_name = "post"
     template_name = "posts/post.html"
 
+
 def searchbar(request):
     if request.method == 'GET':
         query= request.GET.get('q')
@@ -84,7 +88,17 @@ def searchbar(request):
             return render(request, "posts/search_post.html", context)
         else:
             return render(request, "posts/search_post.html")
-
     else:
         return render(request, "posts/search_post.html")
-   
+
+
+def savePost(request, Id):
+    post = Post.objects.get(id=Id)
+    savedImages = UserSavedImage()
+    exists = UserSavedImage.objects.filter(post=post, user=request.user)
+    if not exists:
+        savedImages.user=request.user
+        savedImages.post=post
+        savedImages.save()
+        return redirect("posts")
+    return redirect("posts")

@@ -11,6 +11,7 @@ urlpatterns = [
     path('create_post/', views.PostCreate.as_view(), name="create_post"),
     path('userPage/<int:Id>/', views.userPage, name="userPage"),
     path('post/<int:pk>/', views.PostView.as_view(), name="post"),
-    path('searchbar/', views.searchbar, name="searchbar")
+    path('searchbar/', views.searchbar, name="searchbar"),
+    path('save_post/<int:Id>/', views.savePost, name="save_post")
 
 ]
