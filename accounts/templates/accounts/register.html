@@ -2,32 +2,92 @@
 
 {% block content %}
 {{  user.is_authenticated }}
+{{ form.non_field_errors }}
+
 <h1>Register</h1>
 
-<form action="" method="POST">
+<form action="" method="POST" class="needs-validation" novalidate>
     {% csrf_token %}
 
     <div>
         <label for="{{ form.email.id_for_label }}">Email</label>
-        <input type="text" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" required  placeholder="email"/>
+        <input type="text" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" required  placeholder="email" value="{{ form.email.value|default:'' }}" class="{% if form.email.errors %}is-invalid{% endif %}" />
+        
+        <div class="invalid-feedback">
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <p class="m-0">{{ error }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="m-0">Please provide a valid email address</p>
+            {% endif %}
+        </div>
     </div>
+    <div>
         <label for="{{ form.first_name.id_for_label }}">First name</label>
-        <input type="text" class="form-control form-control-lg" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" required  placeholder="first name"/>
+        <input type="text" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" required  placeholder="first name" value="{{ form.first_name.value|default:'' }}" class="{% if form.first_name.errors %}is-invalid{% endif %}" />
+        <div class="invalid-feedback">
+            {% if form.first_name.errors %}
+                {% for error in form.first_name.errors %}
+                    <p class="m-0">{{ error }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="m-0">Please provide a valid first name</p>
+            {% endif %}
+        </div>
+    </div>
+
     <div>
         <label for="{{ form.last_name.id_for_label }}">Last name</label>
-        <input type="text" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" required placeholder="last name"/>
+        <input type="text" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" required placeholder="last name" value="{{ form.last_name.value|default:'' }}" class="{% if form.last_name.errors %}is-invalid{% endif %}"/>
+        <div class="invalid-feedback">
+            {% if form.last_name.errors %}
+                {% for error in form.last_name.errors %}
+                    <p class="m-0">{{ error }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="m-0">Please provide a valid last name</p>
+            {% endif %}
+        </div>
     </div>
     <div>
         <label for="{{ form.username.id_for_label }}">Username</label>
-        <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" required  placeholder="username"  />
+        <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" required  placeholder="username" value="{{ form.username.value|default:'' }}" class=" {% if form.username.errors %}is-invalid{% endif %}" />
+        <div class="invalid-feedback">
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <p class="m-0">{{ error }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="m-0">Please provide a valid username</p>
+            {% endif %}
+        </div>
     </div>
     <div>
         <label for="{{ form.password1.id_for_label }}">Password</label>
-        <input type="password" id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" autocomplete="new-password" required placeholder="************"  />
+        <input type="password" id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" autocomplete="new-password" required placeholder="************" class="{% if form.password1.errors %}is-invalid{% endif %}" />
+        <div class="invalid-feedback">
+            {% if form.password1.errors %}
+                {% for error in form.password1.errors %}
+                    <p class="m-0">{{ error }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="m-0">Please provide a valid password</p>
+            {% endif %}
+        </div>
     </div>
     <div>
         <label for="{{ form.password2.id_for_label }}" >Re_Password</label>
-        <input type="password" id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" required placeholder="************"  />
+        <input type="password" id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" required placeholder="************" class="{% if form.password2.errors %}is-invalid{% endif %}" />
+        <div class="invalid-feedback">
+            {% if form.password2.errors %}
+                {% for error in form.password2.errors %}
+                    <p class="m-0">{{ error }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="m-0">Please provide a valid password</p>
+            {% endif %}
+        </div>
     </div>
                 
     <div>
