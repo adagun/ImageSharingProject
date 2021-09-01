@@ -1,0 +1,32 @@
+<div class="table-responsive">
+
+    <p class="mt-5">
+
+        <div class="container">
+            <h1>Posts</h1>
+
+        </div>
+      <table class="table table-dark table-striped mt-4">
+        {% for post in posts %} {% if forloop.first %}
+            <thead>
+
+                <tr>
+                    <th class="col-4">Post</th>
+                    <th>User</th>
+                    <th>Image</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+{%endif%}
+
+                </tr>
+
+
+                         <td class="lead text-light">{{post.title}}</td>
+                         <td class="lead text-light">{{post.user}}</td>
+                         <td> {% if post.image %} <img style="width: 140px; height: 80px" src="{{post.image.url}}" alt="default.jpg" class="img-thumbnail"> {% endif %}</td>
+
+        {% endfor %}
+
+        </table>
+            </div>
