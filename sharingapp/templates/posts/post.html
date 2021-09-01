@@ -2,7 +2,8 @@
 {%block content %}
 
 {% if post.user == request.user %}
-    <a href="{% url 'edit_post' post.id%}"> <button type="button" class="btn btn-secondary">Edit</button> </a>
+    <a href="{% url 'edit_post' post.id%}"> <button type="button" class="btn btn-warning">Edit</button> </a>
+    <a href="{% url 'delete_post' post.id%}"> <button type="button" class="btn btn-danger">Delete</button> </a>
         {% endif %}
 <div class="table-responsive">
 
