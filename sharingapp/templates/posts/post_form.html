@@ -1,0 +1,42 @@
+{%extends 'base.html'%}{% block content %}
+
+<div class=" container p-4 ">
+    <div class="d-flex justify-content-between">
+        <h1 class="text-primary fw-bold">Create/Edit Post</h1>
+        <a href="{% url 'posts'%}"> <button type="button" class="btn btn-secondary py-2">Back</button> </a>
+    </div>
+
+    <div class="container w-auto p-3">
+        <form class="mt-4" action=" " method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="form-control ">
+                    <label class="col-1 fw-bold" for="{{ form.title.id_for_label }}">Title:</label>
+                    <div class="input-group ">
+
+                        {{ form.title}} </div>
+                </div>
+                <div class="form-control">
+                    <div>
+                        <label class="col-1 fw-bold" for="{{ form.description.id_for_label }}">Description:</label>
+                    </div>
+                    <div class="input-group ">
+                        {{ form.description}}</div>
+                </div>
+            </div>
+            <div class="form-control  ">
+                <label class="col-2 fw-bold" for="{{ form.image.id_for_label }}">Image:</label>
+                <div class="ml-4"> {{form.image}}</div>
+            </div>
+
+    <div class="col-12 mt-3 ">
+
+        <input class="btn btn-success" type="submit" value="Submit" />
+    </div>
+        </form>
+
+    </div>
+</div>
+</div>
+{%endblock %}
