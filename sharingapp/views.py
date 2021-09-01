@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Post, UserSavedImage
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-
+from django.db.models import Q
 from .forms import PostForm
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -49,8 +49,8 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def profileView(request):
-    savedImages = UserSavedImage.objects.filter(user=request.user)
-    postImages = Post.objects.filter(user=request.user)
+    savedImages = UserSavedImage.objects.filter(user=request.user).order_by('-post__uploaded')
+    postImages = Post.objects.filter(user=request.user).order_by('-uploaded')
 
     context = {
         "savedImages":savedImages,
@@ -71,3 +71,20 @@ class PostView(LoginRequiredMixin, DetailView):
     model = Post
     context_object_name = "post"
     template_name = "posts/post.html"
+
+def searchbar(request):
+    if request.method == 'GET':
+        query= request.GET.get('q')
+        submitbutton= request.GET.get('submit')
+        
+        if query is not None:
+            lookups= Q(title__icontains=query) | Q(description__icontains=query) | Q(user__username__icontains=query)
+            results= Post.objects.filter(lookups).distinct()
+            context={'results': results, 'submitbutton': submitbutton}
+            return render(request, "posts/search_post.html", context)
+        else:
+            return render(request, "posts/search_post.html")
+
+    else:
+        return render(request, "posts/search_post.html")
+   

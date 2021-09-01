@@ -10,5 +10,7 @@ urlpatterns = [
     path('delete_post/<int:pk>/', views.PostDelete.as_view(), name="delete_post"),
     path('create_post/', views.PostCreate.as_view(), name="create_post"),
     path('userPage/<int:Id>/', views.userPage, name="userPage"),
-    path('post/<int:pk>/', views.PostView.as_view(), name="post")
+    path('post/<int:pk>/', views.PostView.as_view(), name="post"),
+    path('searchbar/', views.searchbar, name="searchbar")
+
 ]
