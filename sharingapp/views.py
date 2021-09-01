@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Post, UserSavedImage
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+
 from .forms import PostForm
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -66,3 +67,7 @@ def userPage(request, Id):
         "postImages":postImages,
     }
     return render(request, "userPage.html", context)
+class PostView(LoginRequiredMixin, DetailView):
+    model = Post
+    context_object_name = "post"
+    template_name = "posts/post.html"
