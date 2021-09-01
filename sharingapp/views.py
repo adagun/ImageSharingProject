@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from .models import Post
 from .forms import PostForm
@@ -43,3 +43,9 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     context_object_name = 'post'
     success_url = reverse_lazy('posts')
     template_name = "posts/delete_post.html"
+
+
+class PostView(LoginRequiredMixin, DetailView):
+    model = Post
+    context_object_name = "post"
+    template_name = "posts/post.html"
