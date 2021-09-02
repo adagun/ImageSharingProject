@@ -3,12 +3,12 @@
 {% block content %}
 
 <h1>followed User Page</h1>
-
+<table class="table table-dark table-striped mt-4">
 {% for f in followed %}
     
 
-    <table class="table table-dark table-striped mt-4">{% if forloop.first %}
-            <thead>
+            {% if forloop.first %}
+                <thead>
                 <tr>
                     <th class="col-4">Post</th>
                     <th>User</th>
@@ -16,20 +16,17 @@
                     <th></th>
                     <th></th>
                 </thead>
-{%endif%}
+                {%endif%}
         {% for post in f.followed_user.post_set.all %} 
                 </tr>
                  <td class="lead text-light">{{post.title}}</td>
                  <td class="lead text-light"><a href="{% url 'userPage' post.user.id %}">{{post.user}}</a></td>
                  <td> {% if post.image %} <a href="{% url 'post' post.id%}"><img style="width: 140px; height: 80px" src="{{post.image.url}}" alt="default.jpg" class="img-thumbnail"></a> {% endif %}</td>
-                <td>
                 
-                
-                </td>
         {% endfor %}
-        </table>
 
         
 {% endfor %}
+</table>
 
 {% endblock content %}
