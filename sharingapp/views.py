@@ -10,8 +10,6 @@ from django.db.models import Q
 from .forms import PostForm
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
 # Create your views here.
 
 def indexView(request):
@@ -100,5 +98,5 @@ def savePost(request, Id):
         savedImages.user=request.user
         savedImages.post=post
         savedImages.save()
-        return redirect("posts")
-    return redirect("posts")
+        return redirect(f"/post/{post.id}")
+    return redirect(f"/post/{post.id}")
