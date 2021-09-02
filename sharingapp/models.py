@@ -22,4 +22,4 @@ class UserSavedImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE) 
     
     def __str__(self) -> str:
-        return self.user.username    
+        return f"{self.user.username} - {self.post.title}"
