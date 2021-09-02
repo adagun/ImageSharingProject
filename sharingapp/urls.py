@@ -17,5 +17,6 @@ urlpatterns = [
     path('delete_follow_user/<int:Id>/', views.deleteFollowUser, name="delete_follow_user"),
     path('followed_user_page/', views.followedUserPage, name="followed_user_page"),
     path('unsave_post/<int:Id>/', views.unsavePost, name="unsave_post"),
+    path('edit_profile_picture/<int:pk>/', views.EditProfilePicture.as_view(), name="edit_profile_picture"),
 
 ]

@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
+from django.forms import ModelForm
+
+from accounts.models import UserProfilePicture
 
 
 class UserCreationForm(DjangoUserCreationForm):
@@ -20,3 +23,10 @@ class UserCreationForm(DjangoUserCreationForm):
                 "A user with that email already exists.")
         except User.DoesNotExist:
             return email
+
+
+class UserProfilePicForm(ModelForm):
+    class Meta:
+        model = UserProfilePicture
+        fields = ['image']
+

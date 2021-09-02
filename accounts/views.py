@@ -3,6 +3,9 @@ from django.views.generic import View
 from .forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 
+from .models import UserProfilePicture
+
+
 class RegisterView(View):
     def get(self, request):
         form = UserCreationForm()
@@ -12,9 +15,11 @@ class RegisterView(View):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password2")
             user = authenticate(username=username, password=password)
+            UserProfilePicture.objects.create(user=user)
             if user:
                 login(request, user)
                 return redirect("index")

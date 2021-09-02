@@ -3,14 +3,25 @@
 {% block content %}
 
 <h1>profile page</h1>
+    <div class="row">
+    <div class="col">
 <h3>{{ user.username }}</h3>
+    </div>
+  <div class="col-2">
+        {% for pic in profilePic %}
+        <img style="width: 80px; height: 80px" src="{{pic.image.url}}" class="img-thumbnail" alt="profilePic"/>
+        {% endfor %}
+    <a href="{% url 'edit_profile_picture' user.id %}" class="btn btn-primary " style="font-size: 11px;">Edit profile picture</a>
 
+    </div>
+</div>
+<ul>
 
 <div>
     <h4>Saved Images</h4>
     {% for savedImage in savedImages %}
         {% if savedImage.post.image %} <a href="{% url 'post' savedImage.post.id%}"><img style="width: 140px; height: 80px" src="{{savedImage.post.image.url}}" alt="img" class="img-thumbnail"></a> {% endif %}
-    {% endfor %} 
+    {% endfor %}
 </div>
 
 
@@ -18,7 +29,7 @@
     <h4>uploaded images</h4>
     {% for postImage in postImages %}
         {% if postImage.image %} <a href="{% url 'post' postImage.id%}"><img style="width: 140px; height: 80px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
-    {% endfor %} 
+    {% endfor %}
 </div>
 
 <div>
