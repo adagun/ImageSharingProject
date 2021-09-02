@@ -16,10 +16,14 @@
 </div>
 <div>
 <a href="{% url 'accounts:logout' %}">logout</a>
-</div><div>
+</div>
+<div>
 <a href="{% url 'posts' %}">view posts</a>
     <br>
 <a href="{% url 'create_post' %}">create post</a>
+</div>
+<div>
+<a href="{% url 'followed_user_page' %}">followed user page</a>
 </div>
 
 {% endblock content %}

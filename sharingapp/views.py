@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Post, UserSavedImage
+from .models import Post, UserFollow, UserSavedImage
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.db.models import Q
 from .forms import PostForm
@@ -62,12 +62,18 @@ def profileView(request):
 def userPage(request, Id):
     postImages = Post.objects.filter(user=Id)
     user = User.objects.get(id=Id)
-
+    userFollow = UserFollow.objects.filter(user=request.user, followed_user=user)
+    if userFollow:
+        exists = True
+    else:
+        exists = False
     context = {
         "user":user,
         "postImages":postImages,
+        "exists":exists
     }
     return render(request, "userPage.html", context)
+    
 class PostView(LoginRequiredMixin, DetailView):
     model = Post
     context_object_name = "post"
@@ -100,3 +106,26 @@ def savePost(request, Id):
         savedImages.save()
         return redirect(f"/post/{post.id}")
     return redirect(f"/post/{post.id}")
+
+
+def followUser(request, Id):
+    user = User.objects.get(id=Id)
+    followed = UserFollow()
+    exists = UserFollow.objects.filter(followed_user=user, user=request.user)
+    print(exists)
+    if not exists:
+        followed.user=request.user
+        followed.followed_user=user
+        followed.save()
+        return redirect(f"/userPage/{user.id}")
+    return redirect(f"/userPage/{user.id}")
+
+def deleteFollowUser(request, Id):
+    user = User.objects.get(id=Id)
+    followed = UserFollow.objects.filter(followed_user=user, user=request.user).delete()
+    return redirect(f"/userPage/{user.id}")
+
+
+def followedUserPage(request):
+    followed = UserFollow.objects.filter(user=request.user)
+    return render(request, "followed_user_page.html", {"followed":followed})

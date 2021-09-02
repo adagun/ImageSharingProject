@@ -1,17 +1,10 @@
-<div class="table-responsive">
-    <p class="mt-5">
-        <div class="container">
-            <h1>Posts</h1>
 
-            <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
-                Search <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts"/>
-                <input type="submit" name="submit" value="Search"/>
-            </form>
+<h1>followed User Page</h1>
 
+{% for f in followed %}
+    
 
-        </div>
-      <table class="table table-dark table-striped mt-4">
-        {% for post in posts %} {% if forloop.first %}
+    <table class="table table-dark table-striped mt-4">{% if forloop.first %}
             <thead>
                 <tr>
                     <th class="col-4">Post</th>
@@ -21,6 +14,7 @@
                     <th></th>
                 </thead>
 {%endif%}
+        {% for post in f.followed_user.post_set.all %} 
                 </tr>
                  <td class="lead text-light">{{post.title}}</td>
                  <td class="lead text-light"><a href="{% url 'userPage' post.user.id %}">{{post.user}}</a></td>
@@ -31,4 +25,6 @@
                 </td>
         {% endfor %}
         </table>
-            </div>
+
+        
+{% endfor %}

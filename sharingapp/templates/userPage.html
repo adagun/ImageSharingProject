@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% if exists %}
+    <a href="{% url 'delete_follow_user' user.id%}"><button type="button" class="btn btn-success">Unfollow</button></a>
+{% else %}
+    <a href="{% url 'follow_user' user.id%}"><button type="button" class="btn btn-success">Follow User</button></a>
+{% endif %}
+
 
 <h1>{{ user.username }} page:</h1>
-
 <div>
     <h4>uploaded images</h4>
     {% for postImage in postImages %}
         {% if postImage.image %} <img style="width: 140px; height: 80px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> {% endif %}
     {% endfor %} 
 </div>
-
+{{exists}}
 
 <a href="{% url 'index' %}">Home</a>
 {% endblock content %}

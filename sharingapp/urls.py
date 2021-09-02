@@ -12,6 +12,9 @@ urlpatterns = [
     path('userPage/<int:Id>/', views.userPage, name="userPage"),
     path('post/<int:pk>/', views.PostView.as_view(), name="post"),
     path('searchbar/', views.searchbar, name="searchbar"),
-    path('save_post/<int:Id>/', views.savePost, name="save_post")
+    path('save_post/<int:Id>/', views.savePost, name="save_post"),
+    path('follow_user/<int:Id>/', views.followUser, name="follow_user"),
+    path('delete_follow_user/<int:Id>/', views.deleteFollowUser, name="delete_follow_user"),
+    path('followed_user_page/', views.followedUserPage, name="followed_user_page"),
 
 ]
