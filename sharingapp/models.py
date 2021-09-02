@@ -30,4 +30,4 @@ class UserFollow(models.Model):
     followed_user = models.ForeignKey(User, on_delete=models.CASCADE)  
     
     def __str__(self) -> str:
-        return self.user.username
+        return f"{self.user.username} - {self.post.title}"

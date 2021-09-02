@@ -21,8 +21,12 @@
                 <td>{{post.description}}</td>
                 <td>{{post.uploaded}}</td>
 
-                <a href="{% url 'save_post' post.id%}"><button type="button" class="btn btn-success">save post</button></a>
 
+                {% if user_has_saved %}
+                <a href="{% url 'unsave_post' post.id%}"><button type="button" class="btn btn-success">unsave post</button></a>
+                {% else %}
+                <a href="{% url 'save_post' post.id%}"><button type="button" class="btn btn-success">save post</button></a>
+                {% endif %}
 
 
 

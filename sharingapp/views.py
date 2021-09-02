@@ -79,6 +79,15 @@ class PostView(LoginRequiredMixin, DetailView):
     context_object_name = "post"
     template_name = "posts/post.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(PostView, self).get_context_data(**kwargs)
+
+        # get ids of posts in the users UserSavedImage set
+        user_saved_set = self.request.user.usersavedimage_set.all().values_list('post', flat=True)
+        if context["object"].id in user_saved_set:
+            context['user_has_saved'] = True
+
+        return context
 
 def searchbar(request):
     if request.method == 'GET':
@@ -129,3 +138,7 @@ def deleteFollowUser(request, Id):
 def followedUserPage(request):
     followed = UserFollow.objects.filter(user=request.user)
     return render(request, "followed_user_page.html", {"followed":followed})
+def unsavePost(request, Id):
+    post = Post.objects.get(id=Id)
+    UserSavedImage.objects.filter(post=post, user=request.user.id).delete()
+    return redirect(f"/post/{post.id}")
