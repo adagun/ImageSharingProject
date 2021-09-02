@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if exists %}
-    <a href="{% url 'delete_follow_user' user.id%}"><button type="button" class="btn btn-success">Unfollow</button></a>
+
+{% if user.id == currentUser.id %}
+
 {% else %}
-    <a href="{% url 'follow_user' user.id%}"><button type="button" class="btn btn-success">Follow User</button></a>
+
+    {% if exists %}
+        <a href="{% url 'delete_follow_user' currentUser.id%}"><button type="button" class="btn btn-success">Unfollow</button></a>
+    {% else %}
+        <a href="{% url 'follow_user' currentUser.id%}"><button type="button" class="btn btn-success">Follow User</button></a>
+    {% endif %}
+    
 {% endif %}
 
 
-<h1>{{ user.username }} page:</h1>
+<h1>{{ currentUser.username }} page:</h1>
 <div>
     <h4>uploaded images</h4>
     {% for postImage in postImages %}

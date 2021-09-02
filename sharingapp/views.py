@@ -68,7 +68,7 @@ def userPage(request, Id):
     else:
         exists = False
     context = {
-        "user":user,
+        "currentUser":user,
         "postImages":postImages,
         "exists":exists
     }
