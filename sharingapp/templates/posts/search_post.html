@@ -1,10 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
 <h1>search_posts</h1>
 
 <br/>
 
-
-{% if submitbutton == 'Search' and request.GET.q != '' %}
 {% if results %}
+{% if submitbutton == 'Search' and request.GET.q != '' %}
+
 
 
 
@@ -19,7 +24,7 @@
                     <th></th>
                     <th></th>
                 </thead>
-{%endif%}
+        {%endif%}
                 </tr>
                  <td class="lead text-light">{{result.title}}</td>
                  <td class="lead text-light">{{result.user}}</td>
@@ -32,6 +37,10 @@
         </table>
 
 {% else %}
-No search results for this query
+    No search results for this query
 {% endif %}
+{% else %}
+    No search results for this query
 {% endif %}
+
+{% endblock content %}

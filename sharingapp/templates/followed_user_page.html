@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 
 <h1>followed User Page</h1>
 
@@ -18,9 +21,9 @@
                 </tr>
                  <td class="lead text-light">{{post.title}}</td>
                  <td class="lead text-light"><a href="{% url 'userPage' post.user.id %}">{{post.user}}</a></td>
-                 <td> {% if post.image %} <img style="width: 140px; height: 80px" src="{{post.image.url}}" alt="default.jpg" class="img-thumbnail"> {% endif %}</td>
+                 <td> {% if post.image %} <a href="{% url 'post' post.id%}"><img style="width: 140px; height: 80px" src="{{post.image.url}}" alt="default.jpg" class="img-thumbnail"></a> {% endif %}</td>
                 <td>
-                <a href="{% url 'post' post.id%}"><button type="button" class="btn btn-success">View post</button></a>
+                
                 
                 </td>
         {% endfor %}
@@ -28,3 +31,5 @@
 
         
 {% endfor %}
+
+{% endblock content %}

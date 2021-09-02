@@ -9,7 +9,7 @@
 <div>
     <h4>Saved Images</h4>
     {% for savedImage in savedImages %}
-        {% if savedImage.post.image %} <img style="width: 140px; height: 80px" src="{{savedImage.post.image.url}}" alt="img" class="img-thumbnail"> {% endif %}
+        {% if savedImage.post.image %} <a href="{% url 'post' savedImage.post.id%}"><img style="width: 140px; height: 80px" src="{{savedImage.post.image.url}}" alt="img" class="img-thumbnail"></a> {% endif %}
     {% endfor %} 
 </div>
 
@@ -17,7 +17,7 @@
 <div>
     <h4>uploaded images</h4>
     {% for postImage in postImages %}
-        {% if postImage.image %} <img style="width: 140px; height: 80px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> {% endif %}
+        {% if postImage.image %} <a href="{% url 'post' postImage.id%}"><img style="width: 140px; height: 80px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
     {% endfor %} 
 </div>
 
