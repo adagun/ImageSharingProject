@@ -10,7 +10,7 @@
 
     <div class="container w-auto p-3">
         <form class="mt-4" action=" " method="post" enctype="multipart/form-data">
-
+            <img src="{{ form.instance.image.url }}" style="width: 200px; height: 200px"/>
             {% csrf_token %}
 
             <div class="form-control  ">
