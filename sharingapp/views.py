@@ -1,4 +1,4 @@
-from django.http import request
+
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -53,23 +53,43 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def profileView(request):
-    savedImages = UserSavedImage.objects.filter(user=request.user).order_by('-post__uploaded')
     postImages = Post.objects.filter(user=request.user).order_by('-uploaded')
     profilePic = UserProfilePicture.objects.filter(user=request.user)
 
-    print(profilePic)
+    followers=UserFollow.objects.filter(followed_user=request.user).count()
+    followeing=UserFollow.objects.filter(user=request.user).count()
+    
+    context = {
+        "postImages": postImages,
+        "profilePic": profilePic,
+        "followers":followers,
+        "followeing":followeing
+    }
+    return render(request, "profile.html", context)
+
+def savedPostsView(request):
+    savedImages = UserSavedImage.objects.filter(user=request.user).order_by('-post__uploaded')
+    profilePic = UserProfilePicture.objects.filter(user=request.user)
+
+    postImages = Post.objects.filter(user=request.user)
+    followers=UserFollow.objects.filter(followed_user=request.user).count()
+    followeing=UserFollow.objects.filter(user=request.user).count()
+    
     context = {
         "savedImages": savedImages,
         "postImages": postImages,
         "profilePic": profilePic,
+        "followers":followers,
+        "followeing":followeing
     }
     return render(request, "profile.html", context)
-
 
 def userPage(request, Id):
     postImages = Post.objects.filter(user=Id)
     user = User.objects.get(id=Id)
     userFollow = UserFollow.objects.filter(user=request.user, followed_user=user)
+    
+
     if userFollow:
         exists = True
     else:
@@ -77,7 +97,7 @@ def userPage(request, Id):
     context = {
         "currentUser": user,
         "postImages": postImages,
-        "exists": exists
+        "exists": exists,
     }
     return render(request, "userPage.html", context)
 

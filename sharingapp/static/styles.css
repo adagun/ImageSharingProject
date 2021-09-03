@@ -1,0 +1,36 @@
+body{
+    background-color: #171717;
+    color: #e6e6e6;
+}
+
+.profile_picture_button{
+  border: white solid 0.25px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: #171717;
+  color: white;
+}
+
+.profile_content{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.356);
+}
+
+.border_link{
+    color: #e6e6e6 !important;
+    font-weight: bold;
+
+}
+
+.btn:focus{
+  box-shadow: none;
+} 
+

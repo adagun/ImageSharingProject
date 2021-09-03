@@ -2,40 +2,74 @@
 
 {% block content %}
 
-<h1>profile page</h1>
-    <div class="row">
-    <div class="col">
-<h3>{{ user.username }}</h3>
+<div class="container mt-4 mb-5">
+    <header class="row justify-content-center pt-3 mb-5" >
+        <div class="col-3">
+            <div class="col-6 ">
+                {% for pic in profilePic %}
+                    <img class="rounded-circle" style="height: 150px; width: 160px; " src="{{pic.image.url}}" class="img-thumbnail" alt="profilePic"/>
+                {% endfor %}
+            </div>
+            <div class="col-7 mt-2 ms-4">
+                <a href="{% url 'edit_profile_picture' user.id %}" class="btn profile_picture_button " style="font-size: 11px;">Edit profile picture</a>
+            </div>
+        </div>
+
+        <div class=" col-7 ms-4">
+            <div class="mb-3">
+                <h2>{{ user.username }}</h2>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <p><strong style="margin-right: 0.40em;">{{postImages.count}} </strong> posts </p>
+                </div>
+                <div class="col-3">
+                    <p><strong style="margin-right: 0.40em;">{{followers}} </strong> followers </p>
+                </div>
+                <div class="col-3">
+                    <p><strong style="margin-right: 0.40em;">{{followeing}} </strong> followeing </p>
+                </div>
+            </div>
+            <div>
+               <p>{{ user.first_name }} {{ user.last_name }}</p>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="profile_content active">
+        <div class="row justify-content-center">
+           
+            <div class="col-auto me-5"> <a data-target="#home" data-toggle="tab" href="{% url 'profile' %}" class="btn border_link"><i class="bi bi-grid-3x3"> </i> <small class="text-muted"> POSTS</small></a></div>
+            <div class="col-auto ms-5"> <a href="{% url 'saved_posts' %}" class="btn border_link"><i class="bi bi-save"> </i> <small class="text-muted"> SAVED</small></a></div> 
+        </div>
     </div>
-  <div class="col-2">
-        {% for pic in profilePic %}
-        <img style="width: 80px; height: 80px" src="{{pic.image.url}}" class="img-thumbnail" alt="profilePic"/>
-        {% endfor %}
-    <a href="{% url 'edit_profile_picture' user.id %}" class="btn btn-primary " style="font-size: 11px;">Edit profile picture</a>
 
-    </div>
-</div>
-<ul>
+    {% if request.get_full_path == "/profile/" %}
 
-<div>
-    <h4>Saved Images</h4>
-    {% for savedImage in savedImages %}
-        {% if savedImage.post.image %} <a href="{% url 'post' savedImage.post.id%}"><img style="width: 140px; height: 80px" src="{{savedImage.post.image.url}}" alt="img" class="img-thumbnail"></a> {% endif %}
-    {% endfor %}
-</div>
+        <div class="row ms-3">
+            {% for postImage in postImages %}
+                <div class="col-md-auto mb-4">
+                    {% if postImage.image %} <a href="{% url 'post' postImage.id%}"><img style="width: 280px; height: 200px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
+                </div>
+            {% endfor %}
+            <div class="col-md-auto mb-4">
+                <a href="{% url 'create_post' %}"><img style="width: 280px; height: 200px" src="https://icon-library.com/images/add-new-icon/add-new-icon-29.jpg" alt="img" class="img-thumbnail"> </a>
+            </div>
+        </div>
 
+    {% elif request.get_full_path == "/profile/save/" %}
 
-<div>
-    <h4>uploaded images</h4>
-    {% for postImage in postImages %}
-        {% if postImage.image %} <a href="{% url 'post' postImage.id%}"><img style="width: 140px; height: 80px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
-    {% endfor %}
-</div>
+        <div class="row ms-3">
+            {% for savedImage in savedImages %}
+                <div class="col-md-auto mb-4">
+                    {% if savedImage.post.image %} <a href="{% url 'post' savedImage.post.id%}"><img style="width: 280px; height: 200px" src="{{savedImage.post.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
+                </div>
+            {% endfor %}
+        </div>
 
-<div>
-    <a href="{% url 'create_post' %}" class="btn btn-secondary">upload a new image</a>
+    {% endif %}
 </div>
 
 
-<a href="{% url 'index' %}">Home</a>
 {% endblock content %}
