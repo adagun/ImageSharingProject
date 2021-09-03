@@ -58,11 +58,13 @@ def profileView(request):
     followers = UserFollow.objects.filter(followed_user=request.user).count()
     followeing = UserFollow.objects.filter(user=request.user).count()
 
+
     context = {
         "postImages": postImages,
         "profilePic": profilePic,
         "followers": followers,
-        "followeing": followeing
+        "followeing": followeing,
+        "picId": profilePic.first().id
     }
     return render(request, "profile.html", context)
 
