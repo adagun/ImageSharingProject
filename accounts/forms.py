@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
-from django.forms import ModelForm
+from django.core.exceptions import ValidationError
+from django.forms import ModelForm, ImageField
 
 from accounts.models import UserProfilePicture
 
@@ -26,7 +27,11 @@ class UserCreationForm(DjangoUserCreationForm):
 
 
 class UserProfilePicForm(ModelForm):
+
     class Meta:
         model = UserProfilePicture
         fields = ['image']
+        widgets = {
+            'image': forms.FileInput(),
+        }
 

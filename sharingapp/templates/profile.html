@@ -11,7 +11,7 @@
                 {% endfor %}
             </div>
             <div class="col-7 mt-2 ms-4">
-                <a href="{% url 'edit_profile_picture' user.id %}" class="btn profile_picture_button " style="font-size: 11px;">Edit profile picture</a>
+                <a href="{% url 'edit_profile_picture' picId %}" class="btn profile_picture_button " style="font-size: 11px;">Edit profile picture</a>
             </div>
         </div>
 
@@ -37,13 +37,21 @@
     </header>
 
 
-    <div class="profile_content active">
-        <div class="row justify-content-center">
-           
+<div class="profile_content active">
+    <div class="row justify-content-center">
+       {% if request.get_full_path == "/profile/" %}
+           <div class="col-auto me-5"> <a  style="border-top: 1px solid white" data-target="#home" data-toggle="tab" href="{% url 'profile' %}" class="btn border_link"><i class="bi bi-grid-3x3"> </i> <small class="text-muted"> POSTS</small></a></div>
+        {% else %}
             <div class="col-auto me-5"> <a data-target="#home" data-toggle="tab" href="{% url 'profile' %}" class="btn border_link"><i class="bi bi-grid-3x3"> </i> <small class="text-muted"> POSTS</small></a></div>
-            <div class="col-auto ms-5"> <a href="{% url 'saved_posts' %}" class="btn border_link"><i class="bi bi-save"> </i> <small class="text-muted"> SAVED</small></a></div> 
-        </div>
+        {% endif %}
+
+        {% if request.get_full_path == "/profile/save/" %}
+            <div class="col-auto ms-5"> <a style="border-top: 1px solid white" href="{% url 'saved_posts' %}" class="btn border_link"><i class="bi bi-save"> </i> <small class="text-muted"> SAVED</small></a></div>
+        {% else %}
+            <div class="col-auto ms-5"> <a  href="{% url 'saved_posts' %}" class="btn border_link"><i class="bi bi-save"> </i> <small class="text-muted"> SAVED</small></a></div>
+        {% endif %}
     </div>
+</div>
 
     {% if request.get_full_path == "/profile/" %}
 

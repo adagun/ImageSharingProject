@@ -1,4 +1,3 @@
-
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -11,7 +10,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.db.models import Q
 from .forms import PostForm
 from django.views.generic.list import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from collections import defaultdict
 
@@ -57,33 +56,39 @@ def profileView(request):
     postImages = Post.objects.filter(user=request.user).order_by('-uploaded')
     profilePic = UserProfilePicture.objects.filter(user=request.user)
 
-    followers=UserFollow.objects.filter(followed_user=request.user).count()
-    followeing=UserFollow.objects.filter(user=request.user).count()
-    
+    followers = UserFollow.objects.filter(followed_user=request.user).count()
+    followeing = UserFollow.objects.filter(user=request.user).count()
+
+
     context = {
         "postImages": postImages,
         "profilePic": profilePic,
-        "followers":followers,
-        "followeing":followeing
+        "followers": followers,
+        "followeing": followeing,
+        "picId": profilePic.first().id
     }
     return render(request, "profile.html", context)
+
 
 def savedPostsView(request):
     savedImages = UserSavedImage.objects.filter(user=request.user).order_by('-post__uploaded')
     profilePic = UserProfilePicture.objects.filter(user=request.user)
 
     postImages = Post.objects.filter(user=request.user)
-    followers=UserFollow.objects.filter(followed_user=request.user).count()
-    followeing=UserFollow.objects.filter(user=request.user).count()
-    
+    followers = UserFollow.objects.filter(followed_user=request.user).count()
+    followeing = UserFollow.objects.filter(user=request.user).count()
+
     context = {
         "savedImages": savedImages,
         "postImages": postImages,
         "profilePic": profilePic,
-        "followers":followers,
-        "followeing":followeing
+        "followers": followers,
+        "followeing": followeing,
+        "picId": profilePic.first().id,
+
     }
     return render(request, "profile.html", context)
+
 
 def userPage(request, Id):
     postImages = Post.objects.filter(user=Id)
@@ -91,10 +96,8 @@ def userPage(request, Id):
     userFollow = UserFollow.objects.filter(user=request.user, followed_user=user)
     profilePic = UserProfilePicture.objects.filter(user=user)
 
-    followers=UserFollow.objects.filter(followed_user=request.user).count()
-    followeing=UserFollow.objects.filter(user=request.user).count()
-
-    
+    followers = UserFollow.objects.filter(followed_user=request.user).count()
+    followeing = UserFollow.objects.filter(user=request.user).count()
 
     if userFollow:
         exists = True
@@ -105,8 +108,8 @@ def userPage(request, Id):
         "postImages": postImages,
         "exists": exists,
         "profilePic": profilePic,
-        "followers":followers,
-        "followeing":followeing
+        "followers": followers,
+        "followeing": followeing
     }
     return render(request, "userPage.html", context)
 
@@ -213,7 +216,11 @@ def unsavePost(request, Id):
     return redirect(f"/post/{post.id}")
 
 
-class EditProfilePicture(LoginRequiredMixin, UpdateView):
+class EditProfilePicture(UserPassesTestMixin, UpdateView):
+    # prevent other users from accessing other users edit profile picture page
+    def test_func(self):
+        profilePic = UserProfilePicture.objects.filter(user=self.request.user).first()
+        return profilePic.id == self.get_object().id
     model = UserProfilePicture
     form_class = UserProfilePicForm
     success_url = reverse_lazy('profile')
