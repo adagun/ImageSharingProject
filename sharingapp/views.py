@@ -82,7 +82,9 @@ def savedPostsView(request):
         "postImages": postImages,
         "profilePic": profilePic,
         "followers": followers,
-        "followeing": followeing
+        "followeing": followeing,
+        "picId": profilePic.first().id,
+
     }
     return render(request, "profile.html", context)
 
