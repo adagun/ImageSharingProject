@@ -10,7 +10,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.db.models import Q
 from .forms import PostForm
 from django.views.generic.list import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 # Create your views here.
@@ -185,7 +185,11 @@ def unsavePost(request, Id):
     return redirect(f"/post/{post.id}")
 
 
-class EditProfilePicture(LoginRequiredMixin, UpdateView):
+class EditProfilePicture(UserPassesTestMixin, UpdateView):
+    # prevent other users from accessing other users edit profile picture page
+    def test_func(self):
+        profilePic = UserProfilePicture.objects.filter(user=self.request.user).first()
+        return profilePic.id == self.get_object().id
     model = UserProfilePicture
     form_class = UserProfilePicForm
     success_url = reverse_lazy('profile')
