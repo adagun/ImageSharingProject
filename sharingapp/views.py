@@ -77,8 +77,7 @@ def userPage(request, Id):
     context = {
         "currentUser": user,
         "postImages": postImages,
-        "exists": exists,
-
+        "exists": exists
     }
     return render(request, "userPage.html", context)
 

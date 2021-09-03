@@ -22,12 +22,14 @@
                     
                 </ul>
 
-            <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
-                Search <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts"/>
-                <input type="submit" name="submit" value="Search"/>
-            </form>
+            
                    
             </div>
+            
+            <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
+                <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts"/>
+                <input type="submit" name="submit" value="Search"/>
+            </form>
             
             <div class="collapse navbar-collapse flex-row-reverse" id="navbarNav">
                <ul class="nav navbar-nav navbar-right ">
