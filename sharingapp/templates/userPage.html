@@ -2,27 +2,79 @@
 
 {% block content %}
 
-{% if user.id == currentUser.id %}
-
-{% else %}
-
-    {% if exists %}
-        <a href="{% url 'delete_follow_user' currentUser.id%}"><button type="button" class="btn btn-success">Unfollow</button></a>
-    {% else %}
-        <a href="{% url 'follow_user' currentUser.id%}"><button type="button" class="btn btn-success">Follow User</button></a>
-    {% endif %}
-    
-{% endif %}
 
 
-<h1>{{ currentUser.username }} page:</h1>
-<div>
-    <h4>uploaded images</h4>
-    {% for postImage in postImages %}
-        {% if postImage.image %} <a href="{% url 'post' postImage.id%}"><img style="width: 140px; height: 80px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"></a> {% endif %}
-    {% endfor %} 
-</div>
-{{exists}}
+<div class="container mt-4 mb-5">
+    <header class="row justify-content-center pt-3 mb-5" >
+        <div class="col-3">
+            <div class="col-6 ">
+                {% for pic in profilePic %}
+                    <img class="rounded-circle" style="height: 150px; width: 160px; " src="{{pic.image.url}}" class="img-thumbnail" alt="profilePic"/>
+                {% endfor %}
+            </div>
+            <div class="col-7 mt-2 ms-4">
+                <a href="{% url 'edit_profile_picture' currentUser.id %}" class="btn profile_picture_button " style="font-size: 11px;">Edit profile picture</a>
+            </div>
+        </div>
 
-<a href="{% url 'index' %}">Home</a>
+        <div class=" col-7 ms-4">
+            <div class="row mb-3">
+
+                <div class=" col-2">
+
+                    <h2>{{ currentUser.username }}</h2>
+                </div>
+                <div class=" col-4">
+                    {% if user.id == currentUser.id %}
+
+                    {% else %}
+                        {% if exists %}
+                            <a href="{% url 'delete_follow_user' currentUser.id%}"><button type="button" class="btn profile_picture_button  px-4 ms-3"  style="font-size: 13px; font-weight: bold;"> <i class="bi bi-person-check-fill"></i> </button></a>
+                        {% else %}
+                            <a href="{% url 'follow_user' currentUser.id%}"><button type="button" class="btn btn-primary px-4 ms-3 py-2 " style="font-size: 13px; font-weight: bold;"> Follow </button></a>
+                        {% endif %}
+                        
+                    {% endif %}
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <p><strong style="margin-right: 0.40em;">{{postImages.count}} </strong> posts </p>
+                </div>
+                <div class="col-3">
+                    <p><strong style="margin-right: 0.40em;">{{followers}} </strong> followers </p>
+                </div>
+                <div class="col-3">
+                    <p><strong style="margin-right: 0.40em;">{{followeing}} </strong> followeing </p>
+                </div>
+            </div>
+            <div>
+               <p>{{ currentUser.first_name }} {{ currentUser.last_name }}</p>
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="profile_content active">
+        <div class="row justify-content-center">
+            <div class="col-auto me-5"> <a data-target="#home" data-toggle="tab" href="{% url 'userPage' currentUser.id %}" class="btn border_link"><i class="bi bi-grid-3x3"> </i> <small class="text-muted"> POSTS</small></a></div>
+        </div>
+    </div>
+
+
+        <div class="row ms-3">
+            {% for postImage in postImages %}
+                <div class="col-md-auto mb-4">
+                    {% if postImage.image %} <a href="{% url 'post' postImage.id%}"><img style="width: 280px; height: 200px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+
 {% endblock content %}
