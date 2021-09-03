@@ -88,6 +88,11 @@ def userPage(request, Id):
     postImages = Post.objects.filter(user=Id)
     user = User.objects.get(id=Id)
     userFollow = UserFollow.objects.filter(user=request.user, followed_user=user)
+    profilePic = UserProfilePicture.objects.filter(user=user)
+
+    followers=UserFollow.objects.filter(followed_user=request.user).count()
+    followeing=UserFollow.objects.filter(user=request.user).count()
+
     
 
     if userFollow:
@@ -98,6 +103,9 @@ def userPage(request, Id):
         "currentUser": user,
         "postImages": postImages,
         "exists": exists,
+        "profilePic": profilePic,
+        "followers":followers,
+        "followeing":followeing
     }
     return render(request, "userPage.html", context)
 
