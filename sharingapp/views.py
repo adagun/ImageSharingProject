@@ -13,6 +13,7 @@ from .forms import PostForm
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from collections import defaultdict
 
 # Create your views here.
 
@@ -175,7 +176,35 @@ def deleteFollowUser(request, Id):
 
 def followedUserPage(request):
     followed = UserFollow.objects.filter(user=request.user)
-    return render(request, "followed_user_page.html", {"followed": followed})
+    n = 1
+    posts1=[]
+    posts2=[]
+    posts3=[]
+    posts4=[]
+    for f in followed:
+        postsObj = Post.objects.filter(user = f.followed_user).order_by('-uploaded')
+        for p in postsObj:
+            if n == 1 :
+                posts1.append(p)
+                n = n + 1
+            elif n == 2 :
+                posts2.append(p)
+                n = n + 1
+            elif n == 3 :
+                posts3.append(p)
+                n = n + 1
+            else:
+                posts4.append(p)
+                n = 1
+
+    context = {
+        "posts1":posts1,
+        "posts2":posts2,
+        "posts3":posts3,
+        "posts4":posts4,
+        
+        }         
+    return render(request, "followed_user_page.html", context)
 
 
 def unsavePost(request, Id):

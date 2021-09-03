@@ -2,31 +2,32 @@
 
 {% block content %}
 
-<h1>followed User Page</h1>
-<table class="table table-dark table-striped mt-4">
-{% for f in followed %}
-    
 
-            {% if forloop.first %}
-                <thead>
-                <tr>
-                    <th class="col-4">Post</th>
-                    <th>User</th>
-                    <th>Image</th>
-                    <th></th>
-                    <th></th>
-                </thead>
-                {%endif%}
-        {% for post in f.followed_user.post_set.all %} 
-                </tr>
-                 <td class="lead text-light">{{post.title}}</td>
-                 <td class="lead text-light"><a href="{% url 'userPage' post.user.id %}">{{post.user}}</a></td>
-                 <td> {% if post.image %} <a href="{% url 'post' post.id%}"><img style="width: 140px; height: 80px" src="{{post.image.url}}" alt="default.jpg" class="img-thumbnail"></a> {% endif %}</td>
-                
-        {% endfor %}
+ <div class="container">
+    <div class="row mt-5">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
+            {% for post1 in posts1 %}
+                {% if post1.image %} <a href="{% url 'post' post1.id%}"><img src="{{post1.image.url}}" alt="default.jpg" class="img-fluid "></a> {% endif %}
+            {% endfor %} 
+        </div> 
 
-        
-{% endfor %}
-</table>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+            {% for post2 in posts2 %}
+                {% if post2.image %} <a href="{% url 'post' post2.id%}"><img src="{{post2.image.url}}" alt="default.jpg" class="img-fluid"></a> {% endif %}
+            {% endfor %} 
+        </div> 
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
+            {% for post3 in posts3 %}
+                {% if post3.image %} <a href="{% url 'post' post3.id%}"><img src="{{post3.image.url}}" alt="default.jpg" class="img-fluid"></a> {% endif %}
+            {% endfor %} 
+        </div> 
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+            {% for post4 in posts4 %}
+                {% if post4.image %} <a href="{% url 'post' post4.id%}"><img src="{{post4.image.url}}" alt="default.jpg" class="img-fluid"></a> {% endif %}
+            {% endfor %} 
+        </div> 
+    </div>
+</div>
 
 {% endblock content %}
