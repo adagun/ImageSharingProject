@@ -7,7 +7,6 @@
         <div class="divider bg-light"><hr></div>
 <form action="" method="POST">
     {% csrf_token %}
-
             <label class="mb-1" for="username">Username</label>
             <input type="text" id="username" name="username" class="form-control"/>
             <label class="mb-1" for="password">Password</label>
@@ -16,5 +15,7 @@
         <button class="btn btn-light mt-2" type="submit">Sign in</button>
     </div>
 </form>
+      <p class="text-center mt-1">Don't have an account? <a href="{% url 'accounts:register' %}">Sign up here</a> </p>
+
 </div>
 {% endblock content %}
