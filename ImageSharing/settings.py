@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sharingapp',
     'accounts',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
