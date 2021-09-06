@@ -11,8 +11,9 @@ from django.db.models import Q
 from .forms import PostForm
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.paginator import Paginator
 
-from collections import defaultdict
+
 
 # Create your views here.
 
@@ -21,9 +22,29 @@ def indexView(request):
 
 
 class PostsView(LoginRequiredMixin, ListView):
+    
+    # model = Post
+    # context_object_name = "posts"
+    # template_name = "posts/posts.html"
+    # paginate_by = 10
+    
+    
     model = Post
     context_object_name = "posts"
     template_name = "posts/posts.html"
+    paginate_by = 10
+    extra_context={
+        'profilePic': UserProfilePicture.objects.order_by("?"),
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(PostsView, self).get_context_data(**kwargs)
+        user = self.request.user
+        
+        context.update({
+        'profilePic': UserProfilePicture.objects.order_by("?"),
+    })
+        return context
 
 
 class PostCreate(LoginRequiredMixin, CreateView):
@@ -35,7 +56,6 @@ class PostCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(PostCreate, self).form_valid(form)
-
 
 class PostEdit(LoginRequiredMixin, UpdateView):
     model = Post
@@ -96,6 +116,8 @@ def userPage(request, Id):
     userFollow = UserFollow.objects.filter(user=request.user, followed_user=user)
     profilePic = UserProfilePicture.objects.filter(user=user)
 
+    print(profilePic)
+
     followers = UserFollow.objects.filter(followed_user=request.user).count()
     followeing = UserFollow.objects.filter(user=request.user).count()
 
@@ -131,6 +153,7 @@ class PostView(LoginRequiredMixin, DetailView):
 
 
 def searchbar(request):
+
     if request.method == 'GET':
         query = request.GET.get('q')
         submitbutton = request.GET.get('submit')
@@ -138,7 +161,13 @@ def searchbar(request):
         if query is not None:
             lookups = Q(title__icontains=query) | Q(description__icontains=query) | Q(user__username__icontains=query)
             results = Post.objects.filter(lookups).distinct()
-            context = {'results': results, 'submitbutton': submitbutton}
+            profilePic = UserProfilePicture.objects.all()
+
+            context = {
+                'results': results, 'submitbutton': submitbutton,
+                "profilePic":profilePic,
+                }
+
             return render(request, "posts/search_post.html", context)
         else:
             return render(request, "posts/search_post.html")
@@ -187,6 +216,7 @@ def followedUserPage(request):
     for f in followed:
         postsObj = Post.objects.filter(user = f.followed_user).order_by('-uploaded')
         for p in postsObj:
+            print(p.uploaded)
             if n == 1 :
                 posts1.append(p)
                 n = n + 1

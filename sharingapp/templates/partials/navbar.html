@@ -1,51 +1,164 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand me-5 ms-3 text-warning" href="/">Image Sharing</a>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    
-                    <li class="nav-item me-3 ms-1">
-                        <a class="nav-link" href="{% url 'posts' %}">Posts</a>
-                    </li>
-                    <li class="nav-item me-3 ms-1">
-                        <a class="nav-link" href="{% url 'create_post' %}">Create Post</a>
-                    </li>
-                    
-                    <li class="nav-item me-3 ms-1">
-                        <a class="nav-link" href="{% url 'followed_user_page' %}">Followed Users</a>
-                    </li>
-                    
-                    <li class="nav-item me-3 ms-1">
-                        <a class="nav-link" href="/profile/">Profile</a>
-                    </li>
-                    
-                </ul>
 
-            
-                   
-            </div>
-            
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand brand ms-5" href="/">ImageSharing</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
+        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
+        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
+
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
-                <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts"/>
-                <input type="submit" name="submit" value="Search"/>
+                <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts" class="search-bar" style="width: 400px;"/>
+                <button name="submit" value="Search" type="submit"  class="search-bar-btn" style="margin-left: -45px;"> <i class="bi bi-search"></i> </button>
             </form>
-            
-            <div class="collapse navbar-collapse flex-row-reverse" id="navbarNav">
-               <ul class="nav navbar-nav navbar-right ">
-                    <li class="nav-item">
+        </ul> 
+        
+        
+        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
+        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link " href="{% url 'posts' %}"><i class="bi bi-images"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="{% url 'create_post' %}"><i class="bi bi-file-earmark-plus"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="{% url 'followed_user_page' %}"><i class="bi bi-heart"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="/profile/"><i class="bi bi-person-fill"></i></i></a>
+                    </li>
+                     
+            <li class="nav-item dropdown">
+            <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+            </a>
+
+
+                    
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% if user.is_authenticated %}
+                <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
+                {% else %}
+                <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Login</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'accounts:register' %}">Register</a></li>
+            {% endif %}
+                <li><a class="dropdown-item" href="{% url 'saved_posts' %}">Saved</a></li>
+
+            </ul>
+            </li>
+        </ul>
+
+
+
+         
+        </div>
+    </div>
+</nav>
+<!-- 
+<nav class="navbar navbar-expand-md sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand brand ms-5" href="/">ImageSharing</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+            <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
+                <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts" class="search-bar"/>
+                <button name="submit" value="Search" type="submit"  class="search-bar-btn"> <i class="bi bi-search"></i> </button>
+            </form>
+
+
+            <li class="nav-item me-2 ">
+                        <a class="nav-link" href="{% url 'index' %}"><i class="bi bi-house-door-fill"></i></a>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link " href="{% url 'posts' %}"><i class="bi bi-images"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="{% url 'create_post' %}"><i class="bi bi-file-earmark-plus"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="{% url 'followed_user_page' %}"><i class="bi bi-heart"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="/profile/"><i class="bi bi-person-fill"></i></i></a>
+                    </li>
+                     
+            <li class="nav-item dropdown">
+            <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+            </a>
+
+
+                    
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% if user.is_authenticated %}
+                <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
+                {% else %}
+                <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Login</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'accounts:register' %}">Register</a></li>
+            {% endif %}
+            </ul>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+-->
+<!-- 
+<nav class="navbar  navbar-expand-sm ">
+    <div class="container">
+            <a class="navbar-brand brand" href="/">ImageSharing</a>
+            <div class=" ">
+                <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
+                    <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts" class="search-bar"/>
+                    <button name="submit" value="Search" type="submit"  class="search-bar-btn"> <i class="fas fa-search"></i> </button>
+                </form>
+            </div>
+
+
+
+            <div class="">
+                <ul class="navbar-nav">
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="{% url 'index' %}"><i class="bi bi-house-door-fill"></i></a>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link " href="{% url 'posts' %}"><i class="bi bi-images"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="{% url 'create_post' %}"><i class="bi bi-file-earmark-plus"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="{% url 'followed_user_page' %}"><i class="bi bi-heart"></i></a>
+                    </li>
+                    <li class="nav-item me-2 ">
+                        <a class="nav-link" href="/profile/"><i class="bi bi-person-fill"></i></i></a>
+                    </li>
+                     <li class="nav-item">
                         {% if user.is_authenticated %}
-                            <li><a  class="nav-link"  href="{% url 'accounts:logout' %}">Logout</a></li>
+                            <li><a  class="nav-link"  href="{% url 'accounts:logout' %}"><i class="bi bi-box-arrow-right"></i></a></li>
                         {% else %}
-                            <li><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+                            <li><a class="nav-link" href="{% url 'accounts:login' %}"><i class="bi bi-box-arrow-in-right"></i></a></li>
                             <li><a class="nav-link" href="{% url 'accounts:register' %}">Register</a></li>
                         {% endif %}
                         </a>
                     </li>
-                </ul> 
+                </ul>
             </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-        </div>
-    </nav>
+    </div>
+</nav>
+ --> 

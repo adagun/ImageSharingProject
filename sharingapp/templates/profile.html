@@ -55,22 +55,22 @@
 
     {% if request.get_full_path == "/profile/" %}
 
-        <div class="row ms-3">
+        <div class="row  justify-content-center">
             {% for postImage in postImages %}
-                <div class="col-md-auto mb-4">
+                <div class="col-md-auto ">
                     {% if postImage.image %} <a href="{% url 'post' postImage.id%}"><img style="width: 280px; height: 200px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
                 </div>
             {% endfor %}
-            <div class="col-md-auto mb-4">
+            <div class="col-md-auto ">
                 <a href="{% url 'create_post' %}"><img style="width: 280px; height: 200px" src="https://icon-library.com/images/add-new-icon/add-new-icon-29.jpg" alt="img" class="img-thumbnail"> </a>
             </div>
         </div>
 
     {% elif request.get_full_path == "/profile/save/" %}
 
-        <div class="row ms-3">
+        <div class="row justify-content-center ">
             {% for savedImage in savedImages %}
-                <div class="col-md-auto mb-4">
+                <div class="col-md-auto ">
                     {% if savedImage.post.image %} <a href="{% url 'post' savedImage.post.id%}"><img style="width: 280px; height: 200px" src="{{savedImage.post.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
                 </div>
             {% endfor %}

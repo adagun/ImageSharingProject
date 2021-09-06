@@ -29,18 +29,22 @@
 
                     {% else %}
                         {% if exists %}
-                            <a href="{% url 'delete_follow_user' currentUser.id%}"><button type="button" class="btn profile_picture_button  px-4 ms-3"  style="font-size: 13px; font-weight: bold;"> <i class="bi bi-person-check-fill"></i> </button></a>
+                         
+                            <a href="{% url 'delete_follow_user' currentUser.id%}"><button type="button" class="btn profile_picture_button  px-4 ms-3"  style="font-size: 13px; font-weight: bold; "> <i class="bi bi-person-check-fill"></i> </button></a>
                         {% else %}
                             <a href="{% url 'follow_user' currentUser.id%}"><button type="button" class="btn btn-primary px-4 ms-3 py-2 " style="font-size: 13px; font-weight: bold;"> Follow </button></a>
                         {% endif %}
                         
+
+
+
                     {% endif %}
                 </div>
 
 
 
             </div>
-            <div class="row">
+            <div class="row ">
                 <div class="col-3">
                     <p><strong style="margin-right: 0.40em;">{{postImages.count}} </strong> posts </p>
                 </div>
@@ -66,9 +70,9 @@
     </div>
 
 
-        <div class="row ms-3">
+        <div class="row justify-content-center">
             {% for postImage in postImages %}
-                <div class="col-md-auto mb-4">
+                <div class="col-md-auto">
                     {% if postImage.image %} <a href="{% url 'post' postImage.id%}"><img style="width: 280px; height: 200px" src="{{postImage.image.url}}" alt="img" class="img-thumbnail"> </a>{% endif %}
                 </div>
             {% endfor %}

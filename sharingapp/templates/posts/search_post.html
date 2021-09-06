@@ -3,44 +3,130 @@
 {% block content %}
 
 
-<h1>search_posts</h1>
+<div class="container ">
+    <div class="row py-3 justify-content-center mt-5">
+        <div class="col-lg-3 order-2 me-5" id="sticky-sidebar">
+            <div class="sticky-top">
+                <div class="nav flex-column">
+                    <div class="nav flex-column-inner">
+                        <div  class="nav flex-column-outer">
+                            {% for pic in profilePic %}
+                                {% if pic.user.id == user.id %}
+                                    <a href="{% url 'userPage' user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 70px; width: 70px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
+                                {% endif  %}
+                            {% endfor %}
+                            <div style="display: block; margin-top: 10px; margin-left: 10px;">
+                                <h4><a href="{% url 'profile' %}" class="card-username">{{user.username}}</a></h4>
+                                <p>{{user.first_name}} {{user.last_name}}</p>
+                            </div> 
+                        </div>
+                        <div class="flex-column-random-users mt-2 ms-2 ">
+                            <h6>Suggestions For You:</h6>
 
-<br/>
+                            {% for pic in profilePic|slice:":4" %}
+                            {% if pic.user.id != user.id %}
+                                <div class="ms-4 mt-3" >
+                                    <a href="{% url 'userPage' pic.user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
+                                    <div style="display: block; margin-left: 60px; margin-top: -49px;">
+                                    <a href="{% url 'userPage' pic.user.id %}" class="card-username">{{pic.user.username}}</a>
+                                    <p>{{pic.user.first_name}} {{pic.user.last_name}}</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if results %}
+        {% if submitbutton == 'Search' and request.GET.q != '' %}
 
-{% if results %}
-{% if submitbutton == 'Search' and request.GET.q != '' %}
+        <div class="col lg-11 " id="main">
+            <div class="col-sm-11 col-md-11" >
+                <h1>Search:</h1>
+                {% for result in results %}
+                <div class="card image_card mt-3  ">
+                    <div class="card-body">
+                        {% for pic in profilePic %}
+                            {% if pic.user.id == result.user.id %}
+                                <a href="{% url 'userPage' result.user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
+                            {% endif  %}
+                        {% endfor %}
+                        <a href="{% url 'userPage' result.user.id  %}" class="text-light card-username ms-3">{{result.user.username}}</a>
+                    </div>
+
+                    {% if result.image %} <a href="{% url 'post' result.id%}"><img style="width: 10000px; " src="{{result.image.url}}" alt="default.jpg" class="img-fluid "></a> {% endif %}
+                        
+                </div>
+                {% endfor %}
+            </div> 
+
+
+        {% else %}
+        <div class="col lg-11 " id="main">
+            <div class="col-sm-11 col-md-11" >
+            No search results for this query
+            </div> 
+            </div> 
+        {% endif %}
+        {% else %}
+        <div class="col lg-11 " id="main">
+            <div class="col-sm-11 col-md-11" >
+            No search results for this query
+            </div> 
+            </div> 
+        {% endif %}
+
+
+        <div class="col-4 offset-4 mt-5 mb-5 ">
+            <nav aria-label="...">
+                <ul class="pagination ms-5">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;">Previous</a>
+                    </li>
+                    <li>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;"> 
+                        {{ page_obj.previous_page_number }}
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled " >
+                        <span class="page-link"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #81818186;">Previous</span>
+                    </li>
+                    {% endif %}
+
+                    <li class="page-item active">
+                        <span class="page-link"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;">{{ page_obj.number }}</span>
+                    </li>
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;">
+                        {{ page_obj.next_page_number }}
+                        </a>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled" >
+                    <span class="page-link" style="background-color: #262626; border: #81818186 solid 0.5px;">Next</span>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+
+
+        </div>  
 
 
 
-
-
-<table class="table table-dark table-striped mt-4">
-        {% for result in results %} {% if forloop.first %}
-            <thead>
-                <tr>
-                    <th class="col-4">Post</th>
-                    <th>User</th>
-                    <th>Image</th>
-                    <th></th>
-                    <th></th>
-                </thead>
-        {%endif%}
-                </tr>
-                 <td class="lead text-light">{{result.title}}</td>
-                 <td class="lead text-light">{{result.user}}</td>
-                 <td> {% if result.image %} <img style="width: 140px; height: 80px" src="{{result.image.url}}" alt="default.jpg" class="img-thumbnail"> {% endif %}</td>
-                <td>
-                <a href="{% url 'post' result.id%}"><button type="button" class="btn btn-success">View post</button></a>
-                </td>
-
-        {% endfor %}
-        </table>
-
-{% else %}
-    No search results for this query
-{% endif %}
-{% else %}
-    No search results for this query
-{% endif %}
+    </div> 
+</div> 
 
 {% endblock content %}

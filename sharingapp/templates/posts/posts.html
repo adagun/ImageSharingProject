@@ -2,34 +2,119 @@
 
 {% block content %}
 
-<div class="table-responsive">
-    <p class="mt-5">
+                             
+                            
+                           
+                           
+<div class="container ">
+    <div class="row py-3 justify-content-center ">
+        <div class="col-lg-3 order-2 me-5" id="sticky-sidebar">
+            <div class="sticky-top">
+                <div class="nav flex-column">
+                    <div class="nav flex-column-inner">
+                        <div  class="nav flex-column-outer">
+                            {% for pic in profilePic %}
+                                {% if pic.user.id == user.id %}
+                                    <a href="{% url 'userPage' user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 70px; width: 70px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
+                                {% endif  %}
+                            {% endfor %}
+                            <div style="display: block; margin-top: 10px; margin-left: 10px;">
+                                <h4><a href="{% url 'profile' %}" class="card-username">{{user.username}}</a></h4>
+                                <p>{{user.first_name}} {{user.last_name}}</p>
+                            </div> 
+                        </div>
+                        <div class="flex-column-random-users mt-2 ms-2 ">
+                            <h6>Suggestions For You:</h6>
 
-        <h1>Posts</h1>
-
-        <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
-            Search <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts"/>
-            <input type="submit" name="submit" value="Search"/>
-        </form>
-
-    <table class="table table-dark table-striped mt-4">
-        {% for post in posts %} {% if forloop.first %}
-            <thead>
-                <tr>
-                    <th class="col-4">Post</th>
-                    <th>User</th>
-                    <th>Image</th>
-                    <th></th>
-                    <th></th>
-                </thead>
-{%endif%}
-                </tr>
-                 <td class="lead text-light">{{post.title}}</td>
-                 <td class="lead text-light"><a href="{% url 'userPage' post.user.id %}">{{post.user}}</a></td>
-                 <td> {% if post.image %} <a href="{% url 'post' post.id%}"><img style="width: 140px; height: 100px" src="{{post.image.url}}" alt="default.jpg" class="img-thumbnail"></a> {% endif %}</td>
-                
-        {% endfor %}
-        </table>
+                            {% for pic in profilePic|slice:":4" %}
+                                {% if pic.user.id != user.id %}
+                                    <div class="ms-4 mt-3" >
+                                        <a href="{% url 'userPage' pic.user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
+                                        <div style="display: block; margin-left: 60px; margin-top: -49px;">
+                                        <a href="{% url 'userPage' pic.user.id %}" class="card-username">{{pic.user.username}}</a>
+                                        <p>{{pic.user.first_name}} {{pic.user.last_name}}</p>
+                                        </div>
+                                    </div>
+                            
+                                {% endif %}
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="col lg-11 " id="main">
+        <div class="col-sm-11 col-md-11 " >
+        {% for post in posts %}
+        <div class="card image_card mt-3  ">
+            <div class="card-body">
+                {% for pic in profilePic %}
+                    {% if pic.user.id == post.user.id %}
+                        <a href="{% url 'userPage' post.user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
+                    {% endif  %}
+                {% endfor %}
+                <a href="{% url 'userPage' post.user.id  %}" class="text-light card-username ms-3">{{post.user.username}}</a>
+            </div>
+
+            {% if post.image %} <a href="{% url 'post' post.id%}"><img style="width: 10000px; " src="{{post.image.url}}" alt="default.jpg" class="img-fluid "></a> {% endif %}
+                
+        </div>
+        {% endfor %}
+        </div> 
+
+
+
+        
+        <div class="col-4 offset-4 mt-5 mb-5 ">
+            <nav aria-label="...">
+                <ul class="pagination ms-5">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;">Previous</a>
+                    </li>
+                    <li>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;"> 
+                        {{ page_obj.previous_page_number }}
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled " >
+                        <span class="page-link"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #81818186;">Previous</span>
+                    </li>
+                    {% endif %}
+
+                    <li class="page-item active">
+                        <span class="page-link"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;">{{ page_obj.number }}</span>
+                    </li>
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;">
+                        {{ page_obj.next_page_number }}
+                        </a>
+                    </li>
+                    <li class="page-item ">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"  style="background-color: #262626; border: #81818186 solid 0.5px; color: #e6e6e6;">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled" >
+                    <span class="page-link" style="background-color: #262626; border: #81818186 solid 0.5px;">Next</span>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+
+
+        </div>  
+
+
+        </div>
+    </div>
+</div>
+
+
 
 {% endblock content %}
