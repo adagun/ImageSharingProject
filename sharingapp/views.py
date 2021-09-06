@@ -90,6 +90,7 @@ def profileView(request):
     return render(request, "profile.html", context)
 
 
+@login_required
 def savedPostsView(request):
     savedImages = UserSavedImage.objects.filter(user=request.user).order_by('-post__uploaded')
     profilePic = UserProfilePicture.objects.filter(user=request.user)
@@ -143,8 +144,6 @@ class PostView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PostView, self).get_context_data(**kwargs)
-
-        # get ids of posts in the users UserSavedImage set
         user_saved_set = self.request.user.usersavedimage_set.all().values_list('post', flat=True)
         if context["object"].id in user_saved_set:
             context['user_has_saved'] = True
@@ -206,6 +205,7 @@ def deleteFollowUser(request, Id):
     return redirect(f"/userPage/{user.id}")
 
 
+@login_required
 def followedUserPage(request):
     followed = UserFollow.objects.filter(user=request.user)
     n = 1
