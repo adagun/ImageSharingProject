@@ -41,8 +41,18 @@ class PostsView(LoginRequiredMixin, ListView):
         context = super(PostsView, self).get_context_data(**kwargs)
         user = self.request.user
         
+        followed_user_ids= UserFollow.objects.filter(user=user).values_list('followed_user', flat=True)
+        
+        
+        idList=list(followed_user_ids)
+        print(idList)
+
+        unfollowed_users=User.objects.exclude(id__in=idList)  
+        unfollowed_users=unfollowed_users.exclude(id = user.id)[:4]
+        
         context.update({
         'profilePic': UserProfilePicture.objects.order_by("?"),
+        'unfollowed_users':unfollowed_users
     })
         return context
 
@@ -117,7 +127,6 @@ def userPage(request, Id):
     userFollow = UserFollow.objects.filter(user=request.user, followed_user=user)
     profilePic = UserProfilePicture.objects.filter(user=user)
 
-    print(profilePic)
 
     followers = UserFollow.objects.filter(followed_user=request.user).count()
     followeing = UserFollow.objects.filter(user=request.user).count()
@@ -190,7 +199,6 @@ def followUser(request, Id):
     user = User.objects.get(id=Id)
     followed = UserFollow()
     exists = UserFollow.objects.filter(followed_user=user, user=request.user)
-    print(exists)
     if not exists:
         followed.user = request.user
         followed.followed_user = user
@@ -216,7 +224,6 @@ def followedUserPage(request):
     for f in followed:
         postsObj = Post.objects.filter(user = f.followed_user).order_by('-uploaded')
         for p in postsObj:
-            print(p.uploaded)
             if n == 1 :
                 posts1.append(p)
                 n = n + 1
