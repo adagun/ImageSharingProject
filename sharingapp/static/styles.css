@@ -1,4 +1,20 @@
 
+@media only screen and (min-width: 992px) {
+  .flex-column-inner-content {
+    margin-right: 38px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .flex-column-inner-content {
+    margin-right: 85px;
+  }
+}
+@media only screen and (min-width: 1400px) {
+  .flex-column-inner-content {
+    margin-right: 130px;
+  }
+}
+
 
 body{
     background-color: #171717;
@@ -13,6 +29,7 @@ body{
   height: 90vh;
   background-color: #171717;
   min-height: 400px ;
+  padding-right: -200px;
 }
 
 .flex-column-inner{
@@ -57,7 +74,7 @@ margin-top: -90px;
 .border_link{
     color: #e6e6e6 !important;
     font-weight: bold;
-
+    
 }
 
 .btn:focus{
@@ -159,6 +176,12 @@ i{
 
 .pagination{
   margin-left: -150px;
-  
 }
 
+.sidemenu-link{
+  text-decoration: none;
+}
+
+.sidemenu-link:hover{
+  text-decoration: underline;
+}

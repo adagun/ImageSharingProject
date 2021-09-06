@@ -27,32 +27,22 @@
                             {% for pic in profilePic %}
                                 {% if pic.user.id == unfollowed_user.id %}
 
-
-                                    <div class="row ms-2" >
-                                        <div class="col-4">
-                                        <a href="{% url 'userPage' pic.user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
+                                <div class="container-fluid ">
+                                    <div class="row  justify-content-start " >
+                                        <div class="col-sm-auto ">
+                                            <a href="{% url 'userPage' pic.user.id  %}"><img class="rounded-circle flex-column-inner-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
                                         </div>
 
-                                        <div class="col-4">
-                                        <a href="{% url 'userPage' pic.user.id %}" class="card-username">{{pic.user.username}}</a>
-                                        <p>{{pic.user.first_name}} {{pic.user.last_name}}</p>
+                                        <div class="col-sm-auto">
+                                            <a href="{% url 'userPage' pic.user.id %}" class="card-username flex-column-inner-content">{{pic.user.username}}</a>
+                                            <p class="flex-column-inner-content"><small>{{pic.user.first_name}} {{pic.user.last_name}}</small></p>
                                         </div>
 
-                                        <div class="col-4">
-                                        <a href="{% url 'follow_user' pic.user.id %}" style="margin-top: -149px;">Follow</a>
+                                        <div class="col-sm-auto">
+                                            <a class="sidemenu-link" href="{% url 'follow_user' pic.user.id %}" >Follow</a>
                                         </div>
                                     </div>
-                                    
-                                    <!-- <div class="row ms-4 mt-3" >
-                                        
-                                        <a href="{% url 'userPage' pic.user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
-                                        <div style="display: block; margin-left: 60px; margin-top: -49px;">
-                                        <a href="{% url 'userPage' pic.user.id %}" class="card-username">{{pic.user.username}}</a>
-                                        <p>{{pic.user.first_name}} {{pic.user.last_name}}</p>
-                                        <a href="{% url 'follow_user' pic.user.id %}" style="margin-top: -149px;">Follow</a>
-                                        </div>
-                                    </div> -->
-                            
+                                </div>
                                 {% elif pic.user.id == user.id %}
                                 {% endif %}
                             {% endfor %}

@@ -9,6 +9,8 @@
             <div class="sticky-top">
                 <div class="nav flex-column">
                     <div class="nav flex-column-inner">
+                        
+                        
                         <div  class="nav flex-column-outer">
                             {% for pic in profilePic %}
                                 {% if pic.user.id == user.id %}
@@ -20,21 +22,38 @@
                                 <p>{{user.first_name}} {{user.last_name}}</p>
                             </div> 
                         </div>
+
+
+
                         <div class="flex-column-random-users mt-2 ms-2 ">
                             <h6>Suggestions For You:</h6>
 
-                            {% for pic in profilePic|slice:":4" %}
-                            {% if pic.user.id != user.id %}
-                                <div class="ms-4 mt-3" >
-                                    <a href="{% url 'userPage' pic.user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
-                                    <div style="display: block; margin-left: 60px; margin-top: -49px;">
-                                    <a href="{% url 'userPage' pic.user.id %}" class="card-username">{{pic.user.username}}</a>
-                                    <p>{{pic.user.first_name}} {{pic.user.last_name}}</p>
-                                    </div>
-                                </div>
-                            {% endif %}
+                            {% for unfollowed_user in unfollowed_users %}
+                                {% for pic in profilePic %}
+                                    {% if pic.user.id == unfollowed_user.id %}
+
+                                        <div class="container-fluid ">
+                                            <div class="row  justify-content-start " >
+                                                <div class="col-sm-auto ">
+                                                <a href="{% url 'userPage' pic.user.id  %}"><img class="rounded-circle flex-column-inner-pic" style="height: 40px; width: 43px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
+                                                </div>
+
+                                                <div class="col-sm-auto">
+                                                <a href="{% url 'userPage' pic.user.id %}" class="card-username flex-column-inner-content">{{pic.user.username}}</a>
+                                                <p class="flex-column-inner-content"><small>{{pic.user.first_name}} {{pic.user.last_name}}</small></p>
+                                                </div>
+
+                                                <div class="col-sm-auto">
+                                                <a class="sidemenu-link" href="{% url 'follow_user' pic.user.id %}" >Follow</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
-                            
+
                         </div>
                     </div>
                 </div>

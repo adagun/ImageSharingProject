@@ -40,12 +40,9 @@ class PostsView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PostsView, self).get_context_data(**kwargs)
         user = self.request.user
-        
         followed_user_ids= UserFollow.objects.filter(user=user).values_list('followed_user', flat=True)
         
-        
         idList=list(followed_user_ids)
-        print(idList)
 
         unfollowed_users=User.objects.exclude(id__in=idList)  
         unfollowed_users=unfollowed_users.exclude(id = user.id)[:4]
@@ -171,9 +168,17 @@ def searchbar(request):
             results = Post.objects.filter(lookups).distinct()
             profilePic = UserProfilePicture.objects.all()
 
+            followed_user_ids= UserFollow.objects.filter(user=request.user).values_list('followed_user', flat=True)
+        
+            idList=list(followed_user_ids)
+            
+            unfollowed_users=User.objects.exclude(id__in=idList)  
+            unfollowed_users=unfollowed_users.exclude(id = request.user.id)[:4]
+
             context = {
                 'results': results, 'submitbutton': submitbutton,
                 "profilePic":profilePic,
+                'unfollowed_users':unfollowed_users
                 }
 
             return render(request, "posts/search_post.html", context)
