@@ -9,7 +9,7 @@
         <div class="col-3">
             <div class="col-6 ">
                 {% for pic in profilePic %}
-                    <img class="rounded-circle" style="height: 150px; width: 160px; " src="{{pic.image.url}}" class="img-thumbnail" alt="profilePic"/>
+                    <img class="rounded-circle" style="height: 150px; width: 160px; " src="{{pic.image.url}}" alt="profilePic"/>
                 {% endfor %}
             </div>
             <div class="col-7 mt-2 ms-4">
@@ -78,7 +78,6 @@
             {% endfor %}
         </div>
 
-
-
+</div>
 
 {% endblock content %}

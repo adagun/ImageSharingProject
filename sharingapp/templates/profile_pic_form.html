@@ -13,7 +13,7 @@
  <div class="d-flex align-items-center justify-content-center h-100">
         <form class="mt-4" action=" " method="post" enctype="multipart/form-data">
              <div class="d-flex mt-2 m-auto">
-                <img class="rounded-circle" src="{{ form.instance.image.url }}" style="width: 100%; height: 225px" />
+                <img class="rounded-circle" src="{{ form.instance.image.url }}" style="width: 100%; height: 225px" alt="profile picture" />
             </div>
             {% csrf_token %}
             <div class="form-control mt-3">
