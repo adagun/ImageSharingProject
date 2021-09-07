@@ -9,7 +9,7 @@
 <h1 class="text-center">Register</h1>
 <div class="divider bg-light"><hr></div>
         <div class="form-horizontal container">
-<form action="" method="POST" class="needs-validation" novalidate>
+<form action="" method="POST" class="needs-validation " novalidate>
     {% csrf_token %}
 
         <label  for="{{ form.email.id_for_label }}">Email</label>
@@ -38,9 +38,8 @@
                 <p class="m-0">Please provide a valid first name</p>
             {% endif %}
         </div>
+
         </div>
-
-
         <div class="col-6">
         <label for="{{ form.last_name.id_for_label }}">Last name</label>
         <input type="text" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" required placeholder="last name" value="{{ form.last_name.value|default:'' }}" class="{% if form.last_name.errors %}is-invalid{% endif %} form-control "/>

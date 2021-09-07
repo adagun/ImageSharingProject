@@ -2,7 +2,7 @@
 
 <div class="container py-4 ">
 
-    <a href="{% url 'posts'%}"> <button type="button" class=" btn btn-secondary">Back</button> </a>
+    <a href="{% url 'post' post.id %}"> <button type="button" class=" btn btn-secondary">Back</button> </a>
     <div class="pt-4">
         <form method="post" action="">
             {% csrf_token %}

@@ -23,4 +23,4 @@ class RegisterView(View):
             if user:
                 login(request, user)
                 return redirect("index")
-        return render(request, "accounts/register.html", {"form": form})    
+        return render(request, "accounts/register.html", {"form": form})

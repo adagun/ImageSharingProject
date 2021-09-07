@@ -1,41 +1,47 @@
 {% extends 'base.html'%}
 {%block content %}
 
-{% if post.user == request.user %}
-    <a href="{% url 'edit_post' post.id%}"> <button type="button" class="btn btn-warning">Edit</button> </a>
-    <a href="{% url 'delete_post' post.id%}"> <button type="button" class="btn btn-danger">Delete</button> </a>
-        {% endif %}
-<div class="table-responsive">
 
-    <table class="table table-striped table-dark">
-        <thead>
-            <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Uploaded</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{post.title}}</td>
-                <td>{{post.description}}</td>
-                <td>{{post.uploaded}}</td>
+<div class="container w-75">
 
 
-                {% if user_has_saved %}
-                <a href="{% url 'unsave_post' post.id%}"><button type="button" class="btn btn-success">unsave post</button></a>
+<div class="card m-3" >
+ <h5 class="card-title text-center mt-1">{{ post.title }}</h5>
+  <img  src="{{ post.image.url }}" alt="{{ post.title }}" >
+  <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <p class="card-subtitle mb-1 text-muted small"> Uploaded by
+        <a href="{% url 'userPage' post.user.id  %}" class="text-light card-username ">
+            {{post.user.username}}
+        </a>
+         {{ post.uploaded }}</p>
+      </div>
+  <hr style="margin: 10px -16px;">
+    <p class="card-text">{{ post.description}}</p>
+  <hr style="margin: 10px -16px;">
+  <div class="d-flex justify-content-between">
+
+  <div >
+   <a  class="btn btn-secondary" href="{% url 'posts'%}" >Back</a>
+        {% if user_has_saved %}
+                <a class="btn btn-success" href="{% url 'unsave_post' post.id%}">Unsave</a>
                 {% else %}
-                <a href="{% url 'save_post' post.id%}"><button type="button" class="btn btn-success">save post</button></a>
+                <a class="btn btn-success" href="{% url 'save_post' post.id%}">Save</a>
                 {% endif %}
 
+  </div>
+   <div>
+      {% if post.user == request.user %}
+    <a class="btn btn-warning" href="{% url 'edit_post' post.id%}"> Edit </a>
+    <a class="btn btn-danger" href="{% url 'delete_post' post.id%}">Delete </a>
+        {% endif %}
+  </div>
+  </div>
+  </div>
 
 
-<td class="col">
 
-        <img class="img-fluid max-width" src="{{ post.image.url }}" alt="{{ post.title }}">
 
-            </tbody>
-            </table>
-        </div>
 
-        <a href="{% url 'posts'%}"> <button type="button" class="btn btn-secondary">Back</button> </a> {%endblock%}
+
+{%endblock%}
