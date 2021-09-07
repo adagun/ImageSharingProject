@@ -1,19 +1,19 @@
 
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<nav class="navbar navbar-expand-md navbar-dark sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand brand ms-5" href="/">ImageSharing</a>
+        <a class="navbar-brand brand ms-3" href="/">ImageSharing</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
-        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
-        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
-        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
+        <div class="navbar-nav me-auto mb-2 mb-md-0"></div>
+        <div class="navbar-nav me-auto mb-2 mb-md-0"></div>
+        <div class="navbar-nav me-auto mb-2 mb-md-0"></div>
 
 
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 nav-search-bar">
             <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
                 <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts" class="search-bar" style="width: 400px;"/>
                 <button name="submit" value="Search" type="submit"  class="search-bar-btn" style="margin-left: -45px;"> <i class="bi bi-search"></i> </button>
@@ -21,10 +21,10 @@
         </ul> 
         
         
-        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
-        <div class="navbar-nav me-auto mb-2 mb-lg-0"></div>
+        <div class="navbar-nav me-auto mb-2 mb-md-0"></div>
+        <div class="navbar-nav me-auto mb-2 mb-md-0"></div>
 
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item me-2 ">
                         <a class="nav-link " href="{% url 'posts' %}"><i class="bi bi-images"></i></a>
                     </li>
@@ -38,14 +38,14 @@
                         <a class="nav-link" href="/profile/"><i class="bi bi-person-fill"></i></i></a>
                     </li>
                      
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown ">
             <a class="nav-link " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-three-dots-vertical"></i>
             </a>
 
 
                     
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-start" aria-labelledby="navbarDropdown">
                 {% if user.is_authenticated %}
                 <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
                 {% else %}

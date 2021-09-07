@@ -22,13 +22,6 @@ def indexView(request):
 
 
 class PostsView(LoginRequiredMixin, ListView):
-    
-    # model = Post
-    # context_object_name = "posts"
-    # template_name = "posts/posts.html"
-    # paginate_by = 10
-    
-    
     model = Post
     context_object_name = "posts"
     template_name = "posts/posts.html"
@@ -45,10 +38,10 @@ class PostsView(LoginRequiredMixin, ListView):
         idList=list(followed_user_ids)
 
         unfollowed_users=User.objects.exclude(id__in=idList)  
-        unfollowed_users=unfollowed_users.exclude(id = user.id)[:4]
+        unfollowed_users=unfollowed_users.exclude(id = user.id).order_by("?")[:4]
         
         context.update({
-        'profilePic': UserProfilePicture.objects.order_by("?"),
+        'profilePic': UserProfilePicture.objects.all(),
         'unfollowed_users':unfollowed_users
     })
         return context
