@@ -15,6 +15,9 @@
             {{post.user.username}}
         </a>
          {{ post.uploaded }}</p>
+          {% if post.is_edited %}
+          <i class="card-subtitle text-muted small"> edited: {{ post.edited }}</i>
+            {% endif %}
       </div>
   <hr style="margin: 10px -16px;">
     <p class="card-text">{{ post.description}}</p>

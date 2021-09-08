@@ -8,6 +8,7 @@ class Post(models.Model):
     title = models.CharField(max_length=30)
     description = models.TextField(max_length=500, null=True, blank=True)
     uploaded = models.DateTimeField(auto_now_add=True)
+    edited = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='images/', blank=False)
 
     def __str__(self):
@@ -15,6 +16,11 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-uploaded']
+
+    def is_edited(self):
+        time_diff = (self.edited - self.uploaded).total_seconds()
+        print(time_diff)
+        return time_diff > 60.0
 
 
 class UserSavedImage(models.Model):
