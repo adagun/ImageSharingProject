@@ -4,11 +4,11 @@
 
 
     <div  class="container inner cover text-center mt-5">
-        <div class="cover-container d-flex h-100 pt-5 mx-auto flex-column mt-5"></div>
+
             <h1 class="cover-heading">ImageSharing</h1>
             <p class="lead mt-4">ImageSharing is the best way to share your screenshots and images online!</p>
             {% if not user.is_authenticated %}
-             
+
 
                 <a href="{% url 'accounts:login' %}" class="btn btn-md  btn-light">Sign in</a>
                 <a href="{% url 'accounts:register' %}" class="btn btn-md  btn-light">Register</a>
@@ -18,8 +18,7 @@
                 <a href="{% url 'create_post' %}" class="btn btn-md  btn-light">Share Image</a>
 
             {% endif %}
-            </p>
         </div>
-    </div>
+
 
 {% endblock content %}
