@@ -6,8 +6,9 @@
 
 
 <div class="card m-3" >
- <h5 class="card-title text-center mt-1">{{ post.title }}</h5>
-  <img  src="{{ post.image.url }}" alt="{{ post.title }}" >
+ <h5 class="card-title text-center mt-0 pt-2">{{ post.title }}</h5>
+<hr class="mt-1">
+  <img src="{{ post.image.url }}" alt="{{ post.title }}" >
   <div class="card-body">
       <div class="d-flex justify-content-between">
         <p class="card-subtitle mb-1 text-muted small"> Uploaded by
@@ -44,8 +45,6 @@
 </div>
 </div>
 
+{% endblock %}
 
 
-
-
-{%endblock%}

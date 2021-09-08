@@ -2,11 +2,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
 from accounts.forms import UserProfilePicForm
 from accounts.models import UserProfilePicture
 from .models import Post, UserFollow, UserSavedImage
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.db.models import Q
 from .forms import PostForm
 from django.views.generic.list import ListView
