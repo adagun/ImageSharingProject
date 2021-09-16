@@ -13,7 +13,9 @@
                 {% endfor %}
             </div>
             <div class="col-7 mt-2 ms-4">
+              {% if user.id == currentUser.id %}
                 <a href="{% url 'edit_profile_picture' currentUser.id %}" class="btn profile_picture_button " style="font-size: 11px;">Edit profile picture</a>
+                {% endif %}
             </div>
         </div>
 
