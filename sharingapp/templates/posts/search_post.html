@@ -10,7 +10,7 @@
                 <div class="nav flex-column ms-4" >
                     <div class=" nav flex-column-outer" style="margin-bottom: -170px !important;display: block; margin-top: 175px;">
                         <div class="row  justify-content-start ">
-                            <div  class="col-md-4 " >
+                            <div  class="col-md-4">
                                 {% for pic in profilePic %}
                                     {% if pic.user.id == user.id %}
                                         <a href="{% url 'userPage' user.id  %}"><img class="rounded-circle posts-user-profile-pic" style="height: 70px; width: 70px; " src="{{pic.image.url}}" alt="profilePic"/> </a>
@@ -47,8 +47,6 @@
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
-
-                            
                     </div>
                 </div>
             </div>
