@@ -14,7 +14,7 @@
 
 
         <ul class="navbar-nav me-auto mb-2 mb-md-0 nav-search-bar">
-            <form action="{% url 'searchbar' %}" method="GET" value="{{request.GET.q}}">
+            <form action="{% url 'searchbar' %}" method="GET">
                 <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search posts" class="search-bar" style="width: 400px;"/>
                 <button name="submit" value="Search" type="submit"  class="search-bar-btn" style="margin-left: -45px;"> <i class="bi bi-search"></i> </button>
             </form>

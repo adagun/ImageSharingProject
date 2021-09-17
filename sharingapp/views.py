@@ -218,21 +218,30 @@ def followedUserPage(request):
     posts2=[]
     posts3=[]
     posts4=[]
+
+    follow=[]
+
+
+    
     for f in followed:
-        postsObj = Post.objects.filter(user = f.followed_user).order_by('-uploaded')
-        for p in postsObj:
-            if n == 1 :
-                posts1.append(p)
-                n = n + 1
-            elif n == 2 :
-                posts2.append(p)
-                n = n + 1
-            elif n == 3 :
-                posts3.append(p)
-                n = n + 1
-            else:
-                posts4.append(p)
-                n = 1
+        follow.append(f.followed_user.id)
+    print(follow)    
+
+    posts = Post.objects.filter(user__id__in = follow).order_by('-uploaded')
+    print(posts)    
+    for p in posts:
+        if n == 1 :
+            posts1.append(p)
+            n = n + 1
+        elif n == 2 :
+            posts2.append(p)
+            n = n + 1
+        elif n == 3 :
+            posts3.append(p)
+            n = n + 1
+        else:
+            posts4.append(p)
+            n = 1
 
     context = {
         "posts1":posts1,
